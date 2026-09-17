@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winnipeg 最新油價</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        .update-time { text-align: center; color: #888; font-size: 0.9em; margin-bottom: 20px; }
+        .station { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #eee; }
+        .station:last-child { border-bottom: none; }
+        .name { font-weight: bold; font-size: 1.1em; color: #0056b3; }
+        .price { font-weight: bold; font-size: 1.2em; color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⛽ Winnipeg 油價</h1>
+        <div class="update-time" id="updateTime">載入中...</div>
+        <div id="gasList"></div>
+    </div>
+
+    <script>
+        // 用 JavaScript 讀取 data.json
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('updateTime').innerText = `最後更新: ${data.last_updated}`;
+                
+                const listContainer = document.getElementById('gasList');
+                listContainer.innerHTML = ''; // 清空內容
+                
+                // 將每個油站資料變成 HTML 顯示出嚟
+                data.stations.forEach(station => {
+                    const item = document.createElement('div');
+                    item.className = 'station';
+                    item.innerHTML = `<span class="name">${station.name}</span> <span class="price">${station.price} ¢/L</span>`;
+                    listContainer.appendChild(item);
+                });
+            })
+            .catch(error => {
+                document.getElementById('updateTime').innerText = '無法載入數據，請稍後再試';
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
