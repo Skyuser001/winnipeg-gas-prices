@@ -1,0 +1,38 @@
+name: Update Gas Prices
+
+# 設定幾時執行
+on:
+  schedule:
+    - cron: '0 */4 * * *' # 每 4 個鐘頭執行一次
+  workflow_dispatch: # 容許你喺 GitHub 撳掣手動執行
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 畀權限 GitHub 將更新咗嘅 data.json 儲存返入去
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4
+
+    - name: Run scraper
+      run: python scraper.py
+
+    - name: Commit and push if changed
+      run: |
+        git config --global user.name 'GitHub Action Bot'
+        git config --global user.email 'action@github.com'
+        git add data.json
+        git commit -m "自動更新油價數據" || exit 0
+        git push
