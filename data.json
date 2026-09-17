@@ -1,4 +1,25 @@
 {
-    "last_updated": "2026-09-17 16:06:37",
-    "stations": []
+    "last_updated": "2026-09-17 16:12:13",
+    "stations": [
+        {
+            "name": "Features",
+            "price": "49.9"
+        },
+        {
+            "name": "Company",
+            "price": "49.9"
+        },
+        {
+            "name": "Work With GasBuddy",
+            "price": "49.9"
+        },
+        {
+            "name": "Media",
+            "price": "49.9"
+        },
+        {
+            "name": "Support",
+            "price": "49.9"
+        }
+    ]
 }
