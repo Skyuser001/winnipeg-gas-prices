@@ -1,23 +1,24 @@
 name: Update Gas Prices
 
-# 設定幾時執行
 on:
   schedule:
-    - cron: '0 */4 * * *' # 每 4 個鐘頭執行一次
-  workflow_dispatch: # 容許你喺 GitHub 撳掣手動執行
+    - cron: '0 */4 * * *' 
+  workflow_dispatch: 
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 畀權限 GitHub 將更新咗嘅 data.json 儲存返入去
+      contents: write 
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      # 升級咗去 v4
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      # 升級咗去 v5
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
